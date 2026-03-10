@@ -1,0 +1,40 @@
+{
+  "name": "tmailnest",
+  "version": "1.0.0",
+  "description": "Temp Mail Service",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node-dev --respawn src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jaydipKoriya/tmailnest.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jaydipKoriya/tmailnest/issues"
+  },
+  "homepage": "https://github.com/jaydipKoriya/tmailnest#readme",
+  "dependencies": {
+    "chokidar": "^5.0.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "mailparser": "^3.9.4",
+    "mongoose": "^9.2.4",
+    "mongose": "^0.0.2-security",
+    "nanoid": "^5.1.6",
+    "socket.io": "^4.8.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.3.5",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
+  }
+}
