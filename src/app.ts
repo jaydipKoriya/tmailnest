@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.use("/api/mailbox", mailBoxRouter);
+app.use("/api/mail", mailBoxRouter);
 
 export default app;
 

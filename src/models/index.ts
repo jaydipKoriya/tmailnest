@@ -1,2 +1,2 @@
 export * from "./email.model";
-export * from "./mailbox.model";
+export * from "./mailBox.model";
