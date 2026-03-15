@@ -1,5 +1,6 @@
 import fs from "fs";
 import { simpleParser } from "mailparser";
+import { logger } from "../utils";
 
 export interface ParsedMailData {
     mailbox: string;
@@ -41,7 +42,7 @@ export const parseEmail = async (filePath: string): Promise<ParsedMailData | nul
         };
 
     } catch (error) {
-        console.error("Error parsing email:", error);
+        logger.error(`Error parsing email: ${JSON.stringify(error)}`);
         return null;
     }
 }

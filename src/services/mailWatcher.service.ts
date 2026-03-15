@@ -3,11 +3,12 @@ import chokidar from "chokidar";
 import { parseEmail } from "./mailParser.service";
 import fs from "fs";
 import { Email } from "../models";
+import { logger } from "../utils";
 export const mailWatcher = (io: Server) => {
     const MAILDIR_PATH = process.env.MAILDIR_PATH as string;
 
     if (!MAILDIR_PATH) {
-        console.error("Error: MAILDIR_PATH environment variable is not defined");
+        logger.error("Error: MAILDIR_PATH environment variable is not defined");
         return;
     }
 
@@ -17,10 +18,10 @@ export const mailWatcher = (io: Server) => {
     });
     watcher.on("add", async (path) => {
         try {
-            console.log("New email added:", path);
             const parsedMail = await parseEmail(path);
-            console.log("parsedMail", parsedMail);
+            logger.info(`Parsed mail: ${JSON.stringify(parsedMail)}`);
             if (!parsedMail) {
+                logger.error(`Error parsing email: ${JSON.stringify(parsedMail)}`);
                 fs.unlinkSync(path);
                 return;
             }
@@ -35,14 +36,12 @@ export const mailWatcher = (io: Server) => {
                 text: text ?? "",
 
             });
-            // io.to(mailbox).emit("newEmail", email);
-            console.log(`[Socket] Broadcasting new email to room exactly matching: "${mailbox}"`);
             io.to(mailbox).emit("newEmail", email);
             fs.unlinkSync(path);
 
         } catch (error) {
-            console.error("Error processing email:", error);
+            logger.error(`Error processing email: ${JSON.stringify(error)}`);
         }
     });
-    console.log("Mail watcher started...");
+    logger.info("Mail watcher started...");
 }

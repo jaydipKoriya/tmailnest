@@ -4,6 +4,7 @@ import { connectDB } from "./config";
 import http from "http";
 import { Server } from "socket.io";
 import { mailWatcher } from "./services";
+import { logger } from "./utils";
 
 dotenv.config();
 connectDB();
@@ -20,10 +21,10 @@ const io = new Server(server, {
 //     })
 // })
 io.on("connection", (socket) => {
-    console.log(`[Socket] Frontend connected! ID: ${socket.id}`);
+    logger.info(`[Socket] Frontend connected! ID: ${socket.id}`);
 
     socket.on("join", (mailbox: string) => {
-        console.log(`[Socket] Frontend requested to join room exactly matching: "${mailbox}"`);
+        logger.info(`[Socket] Frontend requested to join room exactly matching: "${mailbox}"`);
         socket.join(mailbox);
     });
 });
@@ -32,5 +33,5 @@ mailWatcher(io);
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-    console.log(`http://localhost:${PORT}`);
+    logger.info(`http://localhost:${PORT}`);
 });
