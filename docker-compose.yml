@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  tmailnest-backend:
+    build: .
+    image: tmailnest-backend:latest
+    container_name: tmailnest-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      # Map the host's mail directory to the container so mailWatcher can access it.
+      # using :ro ensures the container only reads from this directory,
+      # but wait - mailWatcher uses fs.unlinkSync to delete emails!
+      # We must map this as read-write (the default, no :ro).
+      - /var/mail/vmail/tmailnest.online/catchall/new:/var/mail/vmail/tmailnest.online/catchall/new
+    env_file:
+      - .env
